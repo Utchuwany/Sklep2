@@ -1,0 +1,53 @@
+﻿@model Sklep2.Models.OrderListViewModel
+
+@if (Model.Orders.Count == 0)
+{
+    <p>You have not placed any orders yet.</p>
+}
+else
+{
+    <h3>Order History</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Created Date</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>
+                        @if (ViewBag.UserEmails.ContainsKey(order.UserId))
+                        {
+                            @ViewBag.UserEmails[order.UserId]
+                        }
+                        else
+                        {
+                            <span>Unknown User</span>
+                        }
+                    </td>
+                    <td>@order.CreatedDate.ToString("g")</td>
+                    <td>@order.DeliveryDate?.ToString("g")</td>
+                    <td>@order.Status</td>
+                    <td>@order.TotalPrice.ToString("C")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@order.Id" class="btn btn-secondary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-secondary">Details</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+

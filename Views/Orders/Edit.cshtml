@@ -1,0 +1,52 @@
+﻿@model Sklep2.Models.OrderEditViewModel
+
+<h2>Edit Order @Model.OrderId</h2>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="OrderId" />
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label">Status</label>
+        <select asp-for="Status" class="form-control">
+            @foreach (var status in Enum.GetValues(typeof(OrderStatus)))
+            {
+                    <option value="@status" selected="@(Model.Status == (OrderStatus)status)">
+                    @status
+                    </option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DeliveryDate" class="form-label">Delivery Date</label>
+        <input asp-for="DeliveryDate" class="form-control" type="date" />
+    </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    <h3>Order Items</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Items.Count; i++)
+            {
+                    <tr>
+                        <td>@Model.Items[i].ProductName</td>
+
+                        <td>
+                            @Model.Items[i].Quantity
+                        </td>
+
+                        <td>
+                            @Model.Items[i].Price
+                        </td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+
+</form>

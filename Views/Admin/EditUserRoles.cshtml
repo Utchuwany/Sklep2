@@ -1,0 +1,27 @@
+﻿@model Sklep2.Models.RoleEditorModel
+<h1>Edit Role for @Model.UserName</h1>
+
+<form asp-action="EditUserRoles" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Assigned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Roles.Count; i++)
+            {
+                <tr>
+                    <td>@Model.Roles[i].RoleName</td>
+                    <td>
+                        <input type="radio" name="SelectedRole" value="@Model.Roles[i].RoleName" @(Model.Roles[i].IsSelected ? "checked" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
